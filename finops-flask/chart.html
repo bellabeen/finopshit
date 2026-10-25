@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stacked Column Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div>
+        <label for="cost-center-select">Select Cost Center:</label>
+        <select id="cost-center-select">
+            <option value='DHT'>DHT</option><option value='ASP'>ASP</option><option value='TDM'>TDM</option>
+        </select>
+        <button onclick="applyFilter()">Apply Filter</button>
+    </div>
+    <canvas id="myChart"></canvas>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart;
+
+        function applyFilter() {
+            var costCenter = document.getElementById('cost-center-select').value;
+            fetchAndUpdateChart(costCenter);
+        }
+
+        function fetchAndUpdateChart(costCenter) {
+            fetch('/data?cost_center=' + costCenter)
+            .then(response => response.json())
+            .then(data => {
+                myChart.destroy();
+                myChart = new Chart(ctx, data);
+            });
+        }
+
+        var chartData = {"type": "bar", "data": {"datasets": [{"label": "AWS Backup", "data": [{"x": "2024-04-01", "y": 6.0}, {"x": "2024-04-01", "y": 0.3}, {"x": "2024-04-01", "y": 5.41}, {"x": "2024-04-02", "y": 6.0}, {"x": "2024-04-02", "y": 0.3}, {"x": "2024-04-02", "y": 5.41}, {"x": "2024-04-03", "y": 6.01}, {"x": "2024-04-03", "y": 0.3}, {"x": "2024-04-03", "y": 5.42}, {"x": "2024-04-04", "y": 6.01}, {"x": "2024-04-04", "y": 0.3}, {"x": "2024-04-04", "y": 5.42}], "stack": "stack1", "borderWidth": 1}, {"label": "AWS WAF", "data": [{"x": "2024-04-01", "y": 8.64}, {"x": "2024-04-01", "y": 0.66}, {"x": "2024-04-02", "y": 4.76}, {"x": "2024-04-02", "y": 0.62}, {"x": "2024-04-03", "y": 3.71}, {"x": "2024-04-03", "y": 0.58}, {"x": "2024-04-04", "y": 4.0}, {"x": "2024-04-04", "y": 0.58}], "stack": "stack1", "borderWidth": 1}, {"label": "EC2 - Other", "data": [{"x": "2024-04-01", "y": 3.56}, {"x": "2024-04-01", "y": 0.91}, {"x": "2024-04-01", "y": 9.67}, {"x": "2024-04-02", "y": 3.48}, {"x": "2024-04-02", "y": 0.89}, {"x": "2024-04-02", "y": 10.05}, {"x": "2024-04-03", "y": 3.42}, {"x": "2024-04-03", "y": 0.88}, {"x": "2024-04-03", "y": 9.34}, {"x": "2024-04-04", "y": 3.42}, {"x": "2024-04-04", "y": 0.91}, {"x": "2024-04-04", "y": 10.07}], "stack": "stack1", "borderWidth": 1}, {"label": "Amazon Elastic Compute Cloud - Compute", "data": [{"x": "2024-04-01", "y": 11.98}, {"x": "2024-04-01", "y": 3.84}, {"x": "2024-04-01", "y": 30.61}, {"x": "2024-04-02", "y": 12.73}, {"x": "2024-04-02", "y": 3.57}, {"x": "2024-04-02", "y": 27.78}, {"x": "2024-04-03", "y": 11.94}, {"x": "2024-04-03", "y": 3.96}, {"x": "2024-04-03", "y": 28.51}, {"x": "2024-04-04", "y": 11.71}, {"x": "2024-04-04", "y": 3.48}, {"x": "2024-04-04", "y": 29.32}], "stack": "stack1", "borderWidth": 1}, {"label": "Amazon Elastic File System", "data": [{"x": "2024-04-01", "y": 8.7}, {"x": "2024-04-01", "y": 2.5}, {"x": "2024-04-01", "y": 10.13}, {"x": "2024-04-02", "y": 8.68}, {"x": "2024-04-02", "y": 2.51}, {"x": "2024-04-02", "y": 10.14}, {"x": "2024-04-03", "y": 8.7}, {"x": "2024-04-03", "y": 2.52}, {"x": "2024-04-03", "y": 10.15}, {"x": "2024-04-04", "y": 8.71}, {"x": "2024-04-04", "y": 2.52}, {"x": "2024-04-04", "y": 10.18}], "stack": "stack1", "borderWidth": 1}, {"label": "Amazon Elastic Load Balancing", "data": [{"x": "2024-04-01", "y": 25.16}, {"x": "2024-04-01", "y": 1.23}, {"x": "2024-04-01", "y": 7.09}, {"x": "2024-04-02", "y": 14.26}, {"x": "2024-04-02", "y": 1.23}, {"x": "2024-04-02", "y": 7.01}, {"x": "2024-04-03", "y": 10.58}, {"x": "2024-04-03", "y": 1.26}, {"x": "2024-04-03", "y": 7.34}, {"x": "2024-04-04", "y": 10.7}, {"x": "2024-04-04", "y": 1.16}, {"x": "2024-04-04", "y": 6.89}], "stack": "stack1", "borderWidth": 1}, {"label": "Amazon Relational Database Service", "data": [{"x": "2024-04-01", "y": 2.96}, {"x": "2024-04-01", "y": 0.67}, {"x": "2024-04-01", "y": 138.93}, {"x": "2024-04-02", "y": 2.95}, {"x": "2024-04-02", "y": 0.57}, {"x": "2024-04-02", "y": 125.89}, {"x": "2024-04-03", "y": 3.0}, {"x": "2024-04-03", "y": 0.57}, {"x": "2024-04-03", "y": 112.81}, {"x": "2024-04-04", "y": 2.96}, {"x": "2024-04-04", "y": 0.6}, {"x": "2024-04-04", "y": 112.69}], "stack": "stack1", "borderWidth": 1}, {"label": "Amazon Simple Notification Service", "data": [{"x": "2024-04-01", "y": 0.0}, {"x": "2024-04-01", "y": 0.0}, {"x": "2024-04-02", "y": 0.0}, {"x": "2024-04-02", "y": 0.0}, {"x": "2024-04-03", "y": 0.0}, {"x": "2024-04-03", "y": 0.0}, {"x": "2024-04-04", "y": 0.0}, {"x": "2024-04-04", "y": 0.0}], "stack": "stack1", "borderWidth": 1}, {"label": "Amazon Simple Storage Service", "data": [{"x": "2024-04-01", "y": 0.0}, {"x": "2024-04-01", "y": 0.0}, {"x": "2024-04-01", "y": 4.74}, {"x": "2024-04-02", "y": 0.0}, {"x": "2024-04-02", "y": 0.0}, {"x": "2024-04-02", "y": 4.74}, {"x": "2024-04-03", "y": 0.0}, {"x": "2024-04-03", "y": 0.0}, {"x": "2024-04-03", "y": 4.76}, {"x": "2024-04-04", "y": 0.0}, {"x": "2024-04-04", "y": 0.0}, {"x": "2024-04-04", "y": 4.72}], "stack": "stack1", "borderWidth": 1}, {"label": "AmazonCloudWatch", "data": [{"x": "2024-04-01", "y": 0.48}, {"x": "2024-04-01", "y": 0.16}, {"x": "2024-04-01", "y": 1.1}, {"x": "2024-04-02", "y": 0.87}, {"x": "2024-04-02", "y": 0.16}, {"x": "2024-04-02", "y": 1.11}, {"x": "2024-04-03", "y": 0.78}, {"x": "2024-04-03", "y": 0.16}, {"x": "2024-04-03", "y": 1.09}, {"x": "2024-04-04", "y": 0.8}, {"x": "2024-04-04", "y": 0.16}, {"x": "2024-04-04", "y": 1.08}], "stack": "stack1", "borderWidth": 1}, {"label": "Amazon Route 53", "data": [{"x": "2024-04-01", "y": 1.11}, {"x": "2024-04-02", "y": 0.1}, {"x": "2024-04-03", "y": 0.1}, {"x": "2024-04-04", "y": 0.11}], "stack": "stack1", "borderWidth": 1}, {"label": "Amazon Virtual Private Cloud", "data": [{"x": "2024-04-01", "y": 0.12}, {"x": "2024-04-02", "y": 0.12}, {"x": "2024-04-03", "y": 0.12}, {"x": "2024-04-04", "y": 0.12}], "stack": "stack1", "borderWidth": 1}]}, "options": {"scales": {"xAxes": [{"type": "time", "time": {"unit": "day"}}], "yAxes": [{"stacked": true, "ticks": {"beginAtZero": true}}]}}};
+        myChart = new Chart(ctx, chartData);
+    </script>
+</body>
+</html>
